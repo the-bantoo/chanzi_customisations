@@ -1,0 +1,18 @@
+include MANIFEST.in
+include requirements.txt
+include *.json
+include *.md
+include *.py
+include *.txt
+recursive-include chanzi_customisations *.css
+recursive-include chanzi_customisations *.csv
+recursive-include chanzi_customisations *.html
+recursive-include chanzi_customisations *.ico
+recursive-include chanzi_customisations *.js
+recursive-include chanzi_customisations *.json
+recursive-include chanzi_customisations *.md
+recursive-include chanzi_customisations *.png
+recursive-include chanzi_customisations *.py
+recursive-include chanzi_customisations *.svg
+recursive-include chanzi_customisations *.txt
+recursive-exclude chanzi_customisations *.pyc
