@@ -173,3 +173,28 @@ user_data_fields = [
 # 	"chanzi_customisations.auth.validate"
 # ]
 
+
+fixtures = [
+	{
+		"dt": "Custom Script",
+		"filters": [
+			[
+				"name", "in", [
+					"Purchase Invoice-Form"
+				]
+			]
+		]
+
+	},
+	{
+		"dt": "Custom Field",
+		"filters": [
+			[
+				"name", "in", [
+					"Stock Entry-reference_document",
+
+				]
+			]
+		]
+	}
+]
