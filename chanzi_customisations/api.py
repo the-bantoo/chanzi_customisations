@@ -2,6 +2,11 @@ from __future__ import unicode_literals
 import frappe
 from frappe import msgprint, _
 
+
+"""
+exclude non-stock items
+"""
+
 @frappe.whitelist()
 def make_stock_entry(invoice_name):
 	
@@ -35,6 +40,6 @@ def make_stock_entry(invoice_name):
 		'remarks': 'Created from Purchase Invoice ' + doc.name,
 		'reference_document': doc.name
 		
-	}).insert()
+	}).insert(ignore_validate = True)
 	
 	return stock_entry.name
