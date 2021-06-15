@@ -3,9 +3,11 @@ import frappe
 from frappe import msgprint, _
 
 
-"""
-exclude non-stock items
-"""
+def in_dictlist(key, value, my_dictlist):
+    for i in my_dictlist:
+        if i[key] == value:
+            return i
+    return {}
 
 @frappe.whitelist()
 def make_stock_entry(invoice_name):
@@ -14,20 +16,26 @@ def make_stock_entry(invoice_name):
 	src = ''
 	items = []
 	
+	stock_items = frappe.get_list("Item", filters={
+        'is_stock_item': 1
+    })
+	frappe.errprint(stock_items)
+	
 	for item in doc.items:
-		items.append({
-			'item_code': item.item_code,
-			'item_name': item.item_name,
-			'qty': item.stock_qty,
-			'stock_uom': item.stock_uom,
-			'basic_rate': item.base_rate,
-			'basic_amount': item.base_amount,
-			'expense_account': item.expense_account,
-			'cost_center': item.cost_center,
-			's_warehouse': item.warehouse
-		})
-		if src =='' :
-			src = item.warehouse
+		if in_dictlist('name', item.item_code, stock_items):
+			items.append({
+				'item_code': item.item_code,
+				'item_name': item.item_name,
+				'qty': item.stock_qty,
+				'stock_uom': item.stock_uom,
+				'basic_rate': item.base_rate,
+				'basic_amount': item.base_amount,
+				'expense_account': item.expense_account,
+				'cost_center': item.cost_center,
+				's_warehouse': item.warehouse
+			})
+			if src =='' :
+				src = item.warehouse
 			
 		
 	
@@ -40,6 +48,6 @@ def make_stock_entry(invoice_name):
 		'remarks': 'Created from Purchase Invoice ' + doc.name,
 		'reference_document': doc.name
 		
-	}).insert(ignore_validate = True)
+	}).insert()
 	
 	return stock_entry.name
