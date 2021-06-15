@@ -19,8 +19,7 @@ def make_stock_entry(invoice_name):
 	stock_items = frappe.get_list("Item", filters={
         'is_stock_item': 1
     })
-	frappe.errprint(stock_items)
-	
+
 	for item in doc.items:
 		if in_dictlist('name', item.item_code, stock_items):
 			items.append({
